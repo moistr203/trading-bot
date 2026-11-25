@@ -29,3 +29,6 @@ bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it a
 git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.
+Cleanup: if `git branch --show-current` starts with `claude/`, make sure the commit is on origin/main
+(`git push origin HEAD:main` if it isn't), then delete that run branch: `git push origin --delete <that branch>`.
+Never delete `main` or any branch not created by this run.
