@@ -57,6 +57,13 @@ chart scanner (5,900 US stocks, daily setups), news monitor (Yahoo headlines + S
 earnings analyst (filed SEC numbers) and Congress trade tracker. They can't place orders;
 all orders still go through the guarded `scripts/alpaca.sh`.
 
+## Dashboard (live)
+1. GitHub → this repo → Settings → General → Danger Zone → Change visibility → **Public**.
+   (Only paper trades and notes become visible. Keys live in Claude's environment settings, never in the repo.)
+2. Settings → Pages → Source: **Deploy from a branch**, Branch: **main**, Folder: **/docs** → Save.
+3. After a minute it's live at **https://moistr203.github.io/trading-bot/**. Bookmark it or add it to your phone's home screen.
+Every routine run updates `docs/data.json`, and the page refreshes itself every 5 minutes.
+
 ## Watching it
 - **Alpaca paper dashboard**: balance, positions, every order, live.
 - **This repo**: `memory/DAILY-SUMMARY.md` (plain-English daily recap), `TRADE-LOG.md`
