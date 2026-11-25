@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T21:15-06:00",
+ "generated_at": "2026-11-24T21:44-06:00",
  "account": {
   "equity": "100000",
   "last_equity": "100000",
@@ -30,7 +30,7 @@
   "max_buys_per_week": 3
  },
  "latest": {
-  "daily_summary": "## 2026-11-24 daily-summary\n- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).\n- **Cash:** $100,000.00 (100% cash, 0% invested).\n- **Positions:** none, so no stops to check.\n- **What the bot did today:** No trades today. This is the first run (Day 0 baseline set). There are no open or filled orders on the account yet.\n- **Buys this week:** 0 of 3 used.\n- **Watch tomorrow:** Wed Nov 25 is the day before Thanksgiving (market closed Thu, half day Fri). Only buy if there is a real, sourced catalyst that passes the full checklist; doing nothing is fine.",
+  "daily_summary": "## 2026-11-24 daily-summary (late re-run)\n- This run fired at about 10:45 PM ET on Tue Nov 24 (Nov 25 in UTC time), so it still covers Tuesday's session. Wednesday's market has not opened yet.\n- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).\n- **Cash:** $100,000.00 (100% cash, 0% invested).\n- **Positions:** none, so no stops to check. No open or filled orders.\n- **What the bot did today:** No trades today. Nothing has changed since the earlier summary.\n- **Buys this week:** 0 of 3 used.\n- **Watch tomorrow:** Wed Nov 25 is the day before Thanksgiving (market closed Thu, half day Fri). Only buy with a real, sourced catalyst that passes the full checklist.",
   "research": "",
   "weekly_review": ""
  }
