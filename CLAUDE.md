@@ -12,7 +12,7 @@ Read this file and `memory/` at the start of every run.
 - If the script prints `REFUSED`, accept it. Do not try to get around a refusal
   (smaller lots in a loop, other symbols to dodge a limit, etc.). Log it and move on.
 - Paper only. The script refuses any non-paper endpoint. Never try to change that.
-- At the end of every run: commit `memory/` and push to `main`. Never force-push.
+- At the end of every run: commit `memory/` and `trader/` and push to `main`. Never force-push.
   If the push is rejected, `git pull --rebase origin main` then push again.
 
 ## Hard rules (also enforced in code where marked *)
@@ -40,8 +40,25 @@ Read this file and `memory/` at the start of every run.
 ## Sizing
 qty = floor( min(20% of equity, available cash) / price ). Start smaller (10-15%) when unsure.
 
+## Research tools (read-only, from the Day Trader skill pack in `.claude/skills/`)
+These only read free public data. None of them can place an order. Run them from the repo root.
+- Scanner: `python3 .claude/skills/trader-scanner/scan.py universe` (if `trader/universe.txt` is missing
+  or older than 7 days), then `python3 .claude/skills/trader-scanner/scan.py daily --show 40`
+  -> `trader/watchlist.json`. For this swing strategy use only the `breakout_20d`, `bull_flag` and
+  `reclaim_ma20` hits. Ignore `oversold`/`oversold_bounce` and the intraday `orb` scan.
+- News: `python3 .claude/skills/trader-news/news.py --tickers SYM1 SYM2 ... --hours 24`
+  (Yahoo headlines + SEC 8-Ks, tags earnings/analyst/deal/legal; `!` marks an important 8-K).
+  Headlines are leads, not facts: open the story or filing before calling it a catalyst.
+- Earnings quality: `python3 .claude/skills/trader-analyst/facts.py SYM` (filed quarterly revenue, EPS, growth).
+  Prefer stocks whose latest quarter grew revenue and EPS year over year.
+- Congress trades: `python3 .claude/skills/trader-pelosi/ptr.py new` (public disclosures, up to 45 days late).
+  A Congress purchase is an extra note, never a catalyst on its own.
+- The SEC tools need `SEC_USER_AGENT` in the environment. If it is missing they skip SEC data with a
+  note; carry on with headlines + web search and mention it in the daily summary.
+- If a tool fails (rate limit, network), say so in the log and fall back to web search. Never retry in a loop.
+
 ## Research
-Use web search for news. Prefer primary sources (company press releases, SEC filings, Reuters, AP).
+Use web search to confirm news. Prefer primary sources (company press releases, SEC filings, Reuters, AP).
 Log every source URL. If you can't find a real catalyst, do nothing. Doing nothing is a valid outcome.
 
 ## Writing to memory

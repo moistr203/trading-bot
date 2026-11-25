@@ -14,13 +14,14 @@ Do not create a .env file. Do not use curl. Do not work around it.
    - At +20% or more: tighten trail to 5% (cancel old stop, place `trail SYM QTY 5`) unless that breaks the 3% rule.
    - At +15% or more: tighten trail to 7% the same way.
    - Missing a stop: place one now.
-4. Quick web search for breaking news on each position. If there is clearly bad news (fraud, guidance cut,
+4. `python3 .claude/skills/trader-news/news.py --tickers <held symbols> --hours 6`, then confirm anything
+   important with web search. If there is clearly bad news (fraud, guidance cut,
    major downgrade), close it and log why.
 5. Do NOT open new positions at midday unless a BUY-AT-OPEN idea from today's research log could not be
    bought at open and still passes the full checklist.
 6. Log any action in TRADE-LOG.md. If nothing needed doing, write one line saying so.
 
 Final step (always): 
-git add memory/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
+git add memory/ trader/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.

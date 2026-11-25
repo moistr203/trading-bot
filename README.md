@@ -19,9 +19,22 @@ stocks only, stops 5-10%). The agent cannot edit the scripts or rules (`.claude/
      ALPACA_API_KEY=<your paper key>
      ALPACA_SECRET_KEY=<your paper secret>
      ALPACA_ENDPOINT=https://paper-api.alpaca.markets/v2
+     SEC_USER_AGENT=Your Name you@example.com
      ```
-   - Network access: Custom, and add `paper-api.alpaca.markets` and `data.alpaca.markets`.
-     (Without this the bot can't reach Alpaca and will log NETWORK_ERROR.)
+     (SEC requires a real name + email to read filings. Without it the bot skips SEC data.)
+   - Network access: Custom, and add these domains:
+     ```
+     paper-api.alpaca.markets
+     data.alpaca.markets
+     query1.finance.yahoo.com
+     query2.finance.yahoo.com
+     feeds.finance.yahoo.com
+     www.nasdaqtrader.com
+     www.sec.gov
+     data.sec.gov
+     disclosures-clerk.house.gov
+     ```
+     (The first two are required to trade. The rest feed the scanner, news, earnings and Congress tools.)
    - Turn on **allow unrestricted branch pushes** if offered (otherwise pushes to `main` can fail silently).
 4. **Create 5 routines** (Routines → New). For each: repo `moistr203/trading-bot`, branch `main`,
    environment `trading-bot`, timezone **America/Chicago**, and paste the one-line prompt:
@@ -37,6 +50,12 @@ stocks only, stops 5-10%). The agent cannot edit the scripts or rules (`.claude/
 5. **Test.** Click **Run now** on "Trading daily summary". Then check:
    the run transcript shows an `account` result, and a new commit appears in this repo
    updating `memory/DAILY-SUMMARY.md`.
+
+## Research tools
+`.claude/skills/` holds 4 read-only tools from the Day Trader skill pack (MIT, by Jake Schincariol):
+chart scanner (5,900 US stocks, daily setups), news monitor (Yahoo headlines + SEC 8-Ks),
+earnings analyst (filed SEC numbers) and Congress trade tracker. They can't place orders;
+all orders still go through the guarded `scripts/alpaca.sh`.
 
 ## Watching it
 - **Alpaca paper dashboard**: balance, positions, every order, live.

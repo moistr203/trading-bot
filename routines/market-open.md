@@ -19,6 +19,6 @@ Do not create a .env file. Do not use curl. Do not work around it.
 6. Log every order in TRADE-LOG.md (time, symbol, qty, fill price, stop, target, reason).
 
 Final step (always): 
-git add memory/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
+git add memory/ trader/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.
