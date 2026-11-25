@@ -18,6 +18,9 @@ Do not create a .env file. Do not use curl. Do not work around it.
    If it hasn't filled, add it to "Stops to fix".
 6. Log every order in TRADE-LOG.md (time, symbol, qty, fill price, stop, target, reason).
 
+Notify: if you placed or closed any order, send `bash scripts/notify.sh "<what you bought/sold, qty, price, why, stop>"`. If nothing happened, don't send.
+Keep messages short and plain English. Notification problems never stop the run.
+
 Final step (always):
 bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
 git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main

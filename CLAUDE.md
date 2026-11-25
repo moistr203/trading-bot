@@ -71,6 +71,10 @@ Log every source URL. If you can't find a real catalyst, do nothing. Doing nothi
 - Keep entries short. Plain English, so a beginner can follow along.
 - The repo is PUBLIC (it powers the dashboard). Never write keys, account numbers, emails or personal info anywhere.
 
+## Notifications
+`bash scripts/notify.sh "text"` sends the owner a WhatsApp message (the dashboard link is added automatically).
+Each routine says when to send. Never put keys, phone numbers or emails in a message or in the repo.
+
 ## Commands
 account | positions | orders [open|closed|all] | clock | quote SYM | bars SYM [DAYS] |
 buy SYM QTY | trail SYM QTY PCT | stop SYM QTY PRICE | sell SYM QTY | close SYM |

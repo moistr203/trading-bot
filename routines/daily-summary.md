@@ -15,6 +15,9 @@ Do not create a .env file. Do not use curl. Do not work around it.
    - What the bot did today and why (one or two sentences per action), or "No trades today" and why.
    - Buys used this week (`weekcount`) and anything to watch tomorrow.
 
+Notify (always): `bash scripts/notify.sh "<Trading bot, date: equity, today's $ and %, positions with P/L, what it did today in one line>"`.
+Keep messages short and plain English. Notification problems never stop the run.
+
 Final step (always):
 bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
 git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main

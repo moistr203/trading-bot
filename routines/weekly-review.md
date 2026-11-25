@@ -17,6 +17,9 @@ Do not create a .env file. Do not use curl. Do not work around it.
    - 1-3 lessons, plain English.
 3. Append the lessons (dated) under "Lessons" in memory/TRADING-STRATEGY.md. Do not change the hard rules.
 
+Notify (always): `bash scripts/notify.sh "<Week recap: equity change vs SPY, trades, win rate, top lesson>"`.
+Keep messages short and plain English. Notification problems never stop the run.
+
 Final step (always):
 bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
 git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
