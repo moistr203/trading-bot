@@ -1,6 +1,14 @@
 # Daily Summary
 (newest at top)
 
+## 2026-11-25 daily-summary
+- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
+- **Cash:** $100,000.00 (100% cash, 0% invested).
+- **Positions:** none, so no stops to check. No open or filled orders.
+- **What the bot did today:** No trades today. The pre-market scan found one idea (DLTR, after its earnings jump), but buying it would have meant chasing an 11% gap on a weak, risk-off day, so it stayed on the watch list. No other stock had a real catalyst.
+- **Buys this week:** 0 of 3 used.
+- **Watch tomorrow:** Thursday Nov 26 the market is closed for Thanksgiving. Friday Nov 27 is a half day (closes 1 PM ET). DLTR stays on watch; only buy with a fresh, sourced catalyst that passes the full checklist.
+
 ## 2026-11-24 daily-summary (late re-run)
 - This run fired at about 10:45 PM ET on Tue Nov 24 (Nov 25 in UTC time), so it still covers Tuesday's session. Wednesday's market has not opened yet.
 - **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
