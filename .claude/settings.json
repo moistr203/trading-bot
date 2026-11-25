@@ -12,7 +12,9 @@
       "Write(CLAUDE.md)",
       "Edit(CLAUDE.md)",
       "Write(.claude/**)",
-      "Edit(.claude/**)"
+      "Edit(.claude/**)",
+      "Write(docs/index.html)",
+      "Edit(docs/index.html)"
     ]
   }
 }

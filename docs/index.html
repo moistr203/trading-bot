@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Trading Bot</title>
+<style>
+.viz-root{
+  color-scheme:light;
+  --bg:#f6f6f4; --surface-1:#ffffff; --border:#e4e4e0;
+  --text-primary:#191919; --text-secondary:#666666; --grid:#ececea;
+  --series-1:#257de0; --series-2:#f47230;
+  --good:#0a8a1f; --critical:#dc3c3d;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])) .viz-root{
+    color-scheme:dark;
+    --bg:#111111; --surface-1:#191919; --border:#2c2c2c;
+    --text-primary:#efefef; --text-secondary:#9c9c9c; --grid:#262626;
+    --series-1:#338ced; --series-2:#e76624;
+    --good:#0aac23; --critical:#eb6263;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body.viz-root{background:var(--bg);color:var(--text-primary);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:16px}
+h1{font-size:22px;margin:0}
+.badge{font-size:12px;font-weight:600;letter-spacing:.04em;border:1px solid var(--border);
+  border-radius:999px;padding:2px 10px;color:var(--text-secondary)}
+.updated{color:var(--text-secondary);font-size:13px;margin-left:auto}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.tile,.card{background:var(--surface-1);border:1px solid var(--border);border-radius:12px}
+.tile{padding:12px 14px}
+.tile .label{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em}
+.tile .value{font-size:22px;white-space:nowrap;font-weight:650;font-variant-numeric:tabular-nums;margin-top:2px}
+.tile .sub{font-size:13px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+.card{padding:14px 16px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.card h2 .spacer{flex:1}
+button.link{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-secondary);
+  font-size:12px;padding:3px 9px;cursor:pointer}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--text-secondary);margin-bottom:6px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto}
+.tip{position:absolute;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:8px;padding:6px 9px;font-size:12px;box-shadow:0 2px 10px rgba(0,0,0,.12);
+  white-space:nowrap;display:none;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border)}
+th:first-child,td:first-child{text-align:left}
+th{white-space:nowrap;font-size:12px;color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.tablewrap{overflow-x:auto}
+.up{color:var(--good)} .down{color:var(--critical)}
+.empty{color:var(--text-secondary);font-size:14px;padding:8px 0}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.note{white-space:pre-wrap;font-size:14px;max-height:420px;overflow:auto;color:var(--text-primary)}
+.note .h{font-weight:650;display:block;margin:6px 0 2px}
+.warn{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--critical);
+  border-radius:10px;padding:10px 14px;margin-bottom:14px;display:none}
+footer{color:var(--text-secondary);font-size:12px;margin-top:20px}
+</style>
+</head>
+<body class="viz-root">
+<div class="wrap">
+  <header>
+    <h1>Paper Trading Bot</h1>
+    <span class="badge">PAPER · FAKE MONEY</span>
+    <span class="updated" id="updated">Loading…</span>
+  </header>
+
+  <div class="warn" id="warn"></div>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="card">
+    <h2>Bot vs. S&amp;P 500 (SPY), % change<span class="spacer"></span>
+      <button class="link" id="toggleTable">Show table</button></h2>
+    <div class="legend" id="legend"></div>
+    <div class="chart" id="chart"></div>
+    <div class="tablewrap" id="chartTable" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2>Open positions</h2>
+    <div class="tablewrap" id="positions"></div>
+  </section>
+
+  <section class="card">
+    <h2>Recent orders</h2>
+    <div class="tablewrap" id="orders"></div>
+  </section>
+
+  <section class="notes">
+    <div class="card"><h2>Latest daily summary</h2><div class="note" id="n-daily"></div></div>
+    <div class="card"><h2>Latest research</h2><div class="note" id="n-research"></div></div>
+    <div class="card"><h2>Latest weekly review</h2><div class="note" id="n-weekly"></div></div>
+  </section>
+
+  <footer>Updated by the bot after every scheduled run. Paper trading only. Not financial advice.
+    This page refreshes itself every 5 minutes.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $ = function(id){ return document.getElementById(id); };
+var NS = "http://www.w3.org/2000/svg";
+
+function num(v){ var n = parseFloat(v); return isFinite(n) ? n : null; }
+function money(v, dp){ var n = num(v); if(n===null) return "–";
+  return (n<0?"−$":"$") + Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:dp===undefined?2:dp,maximumFractionDigits:dp===undefined?2:dp}); }
+function pct(v){ var n = num(v); if(n===null) return "–";
+  return (n>0?"▲ +":n<0?"▼ −":"") + Math.abs(n).toFixed(2) + "%"; }
+function signed(v){ var n = num(v); if(n===null) return "–";
+  return (n>0?"▲ +":n<0?"▼ −":"") + money(Math.abs(n)); }
+function cls(v){ var n = num(v); return n>0?"up":n<0?"down":""; }
+function el(tag, text, className){ var e = document.createElement(tag);
+  if(text!==undefined && text!==null) e.textContent = String(text); if(className) e.className = className; return e; }
+function svg(tag, attrs){ var e = document.createElementNS(NS, tag);
+  for(var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function fmtDate(d){ var p = String(d).split("-"); if(p.length<3) return String(d);
+  return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+p[1]-1] + " " + (+p[2]); }
+
+function table(head, rows){
+  if(!rows.length) return el("div","Nothing yet.","empty");
+  var t = el("table"), tr = el("tr"); var th = el("thead");
+  head.forEach(function(h){ tr.appendChild(el("th",h)); }); th.appendChild(tr); t.appendChild(th);
+  var tb = el("tbody");
+  rows.forEach(function(r){ var row = el("tr");
+    r.forEach(function(c){ var td = el("td", c && c.t!==undefined ? c.t : c); if(c && c.c) td.className = c.c; row.appendChild(td); });
+    tb.appendChild(row); });
+  t.appendChild(tb); return t;
+}
+
+function tile(label, value, sub, subCls){
+  var d = el("div",null,"tile");
+  d.appendChild(el("div",label,"label")); d.appendChild(el("div",value,"value"));
+  if(sub!==undefined) d.appendChild(el("div",sub,"sub " + (subCls||"")));
+  return d;
+}
+
+function renderNote(id, text){
+  var box = $(id); box.textContent = "";
+  if(!text){ box.appendChild(el("span","Nothing yet. This fills in after the bot's first run.","empty")); return; }
+  text.split("\n").forEach(function(line){
+    if(/^#{1,4}\s/.test(line)) box.appendChild(el("span", line.replace(/^#+\s*/,""), "h"));
+    else box.appendChild(document.createTextNode(line.replace(/\*\*/g,"") + "\n"));
+  });
+}
+
+function series(d){
+  var eq = (d.equity_history||[]).filter(function(p){ return p.equity>0; });
+  if(eq.length<1) return null;
+  var spyMap = {}; (d.spy_history||[]).forEach(function(b){ spyMap[b.date]=b.close; });
+  var base = eq[0].equity, spyBase = null, out = [];
+  eq.forEach(function(p){
+    var s = spyMap[p.date]; if(spyBase===null && s) spyBase = s;
+    out.push({date:p.date, bot:(p.equity/base-1)*100, equity:p.equity,
+              spy: (s && spyBase) ? (s/spyBase-1)*100 : null});
+  });
+  return out;
+}
+
+function drawChart(pts){
+  lastPts = pts;
+  var box = $("chart"); box.textContent = "";
+  var lg = $("legend"); lg.textContent = "";
+  if(!pts || pts.length<2){ box.appendChild(el("div","The chart starts after the bot has two days of history.","empty")); return; }
+  [["Bot","--series-1"],["SPY","--series-2"]].forEach(function(s){
+    var sp = el("span"); var i = el("i"); i.style.background = "var("+s[1]+")"; sp.appendChild(i);
+    sp.appendChild(document.createTextNode(s[0])); lg.appendChild(sp); });
+
+  var W=Math.max(300,box.clientWidth||1000),H=W<600?240:320,L=48,R=W<600?70:86,T=14,B=30;
+  var vals=[0]; pts.forEach(function(p){ vals.push(p.bot); if(p.spy!==null) vals.push(p.spy); });
+  var lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals);
+  var pad=Math.max((hi-lo)*0.12,0.5); lo-=pad; hi+=pad;
+  var x=function(i){ return L + (W-L-R)*(pts.length===1?0:i/(pts.length-1)); };
+  var y=function(v){ return T + (H-T-B)*(1-(v-lo)/(hi-lo)); };
+  var s = svg("svg",{viewBox:"0 0 "+W+" "+H,width:W,height:H,role:"img","aria-label":"Bot versus SPY percent change"});
+
+  var step = niceStep((hi-lo)/5);
+  for(var g=Math.ceil(lo/step)*step; g<=hi; g+=step){
+    var gy=y(g);
+    s.appendChild(svg("line",{x1:L,x2:W-R,y1:gy,y2:gy,stroke:Math.abs(g)<1e-9?"var(--text-secondary)":"var(--grid)","stroke-width":1}));
+    var tx=svg("text",{x:L-8,y:gy+4,"text-anchor":"end","font-size":12,fill:"var(--text-secondary)"});
+    tx.textContent=(g>0?"+":"")+g.toFixed(step<1?1:0)+"%"; s.appendChild(tx);
+  }
+  var every=Math.max(1,Math.ceil(pts.length/(W<600?4:7)));
+  pts.forEach(function(p,i){ if((i%every===0 && pts.length-1-i>=every*0.6) || i===pts.length-1){
+    var tx=svg("text",{x:x(i),y:H-8,"text-anchor":"middle","font-size":12,fill:"var(--text-secondary)"});
+    tx.textContent=fmtDate(p.date); s.appendChild(tx);} });
+
+  function path(key){ var d="",on=false;
+    pts.forEach(function(p,i){ var v=p[key]; if(v===null){on=false;return;}
+      d+=(on?"L":"M")+x(i).toFixed(1)+","+y(v).toFixed(1); on=true; }); return d; }
+  s.appendChild(svg("path",{d:path("spy"),fill:"none",stroke:"var(--series-2)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  s.appendChild(svg("path",{d:path("bot"),fill:"none",stroke:"var(--series-1)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+
+  var last=pts[pts.length-1], li=pts.length-1;
+  var ends=[{k:"bot",n:"Bot",v:last.bot}]; if(last.spy!==null) ends.push({k:"spy",n:"SPY",v:last.spy});
+  var ly=ends.map(function(e){return y(e.v);});
+  if(ly.length===2 && Math.abs(ly[0]-ly[1])<16){ var m=(ly[0]+ly[1])/2, up=ly[0]<ly[1]?-1:1; ly[0]=m+up*8; ly[1]=m-up*8; }
+  ends.forEach(function(e,j){
+    var tx=svg("text",{x:x(li)+8,y:ly[j]+4,"font-size":12,fill:"var(--text-primary)"});
+    tx.textContent=e.n+" "+(e.v>=0?"+":"−")+Math.abs(e.v).toFixed(1)+"%"; s.appendChild(tx); });
+
+  var cross=svg("line",{y1:T,y2:H-B,stroke:"var(--text-secondary)","stroke-width":1,"stroke-dasharray":"3 3",visibility:"hidden"});
+  var dB=svg("circle",{r:5,fill:"var(--series-1)",stroke:"var(--surface-1)","stroke-width":2,visibility:"hidden"});
+  var dS=svg("circle",{r:5,fill:"var(--series-2)",stroke:"var(--surface-1)","stroke-width":2,visibility:"hidden"});
+  s.appendChild(cross); s.appendChild(dS); s.appendChild(dB);
+  var hit=svg("rect",{x:L,y:T,width:W-L-R,height:H-T-B,fill:"transparent"}); s.appendChild(hit);
+  box.appendChild(s);
+  var tip=el("div",null,"tip"); box.appendChild(tip);
+
+  function move(ev){
+    var r=s.getBoundingClientRect(); var cx=(ev.clientX-r.left)*W/r.width;
+    var i=Math.round((cx-L)/((W-L-R)/Math.max(1,pts.length-1))); i=Math.max(0,Math.min(pts.length-1,i));
+    var p=pts[i], px=x(i);
+    cross.setAttribute("x1",px); cross.setAttribute("x2",px); cross.setAttribute("visibility","visible");
+    dB.setAttribute("cx",px); dB.setAttribute("cy",y(p.bot)); dB.setAttribute("visibility","visible");
+    if(p.spy!==null){ dS.setAttribute("cx",px); dS.setAttribute("cy",y(p.spy)); dS.setAttribute("visibility","visible"); }
+    else dS.setAttribute("visibility","hidden");
+    tip.textContent="";
+    tip.appendChild(el("div",fmtDate(p.date)));
+    tip.appendChild(el("div","Bot: "+pct(p.bot)+"  ("+money(p.equity,0)+")"));
+    tip.appendChild(el("div","SPY: "+(p.spy===null?"–":pct(p.spy))));
+    tip.style.display="block";
+    var left=px*r.width/W+12; if(left+tip.offsetWidth>r.width) left=px*r.width/W-tip.offsetWidth-12;
+    tip.style.left=left+"px"; tip.style.top="8px";
+  }
+  function leave(){ tip.style.display="none"; [cross,dB,dS].forEach(function(n){n.setAttribute("visibility","hidden");}); }
+  hit.addEventListener("pointermove",move); hit.addEventListener("pointerdown",move); hit.addEventListener("pointerleave",leave);
+
+  var tw=$("chartTable"); tw.textContent="";
+  tw.appendChild(table(["Date","Bot equity","Bot %","SPY %"], pts.slice().reverse().map(function(p){
+    return [fmtDate(p.date), money(p.equity,0), {t:pct(p.bot),c:cls(p.bot)}, p.spy===null?"–":{t:pct(p.spy),c:cls(p.spy)}]; })));
+}
+function niceStep(raw){ var p=Math.pow(10,Math.floor(Math.log10(raw||1))); var f=raw/p;
+  return (f<=1?1:f<=2?2:f<=5?5:10)*p; }
+
+function render(d){
+  var a=d.account||{}, eq=num(a.equity), last=num(a.last_equity);
+  $("updated").textContent = "Last bot run: " + new Date(d.generated_at).toLocaleString();
+  var hist=d.equity_history||[], start=hist.length?hist[0].equity:null;
+  var day = (eq!==null && last) ? eq-last : null, dayP = (day!==null && last) ? day/last*100 : null;
+  var tot = (eq!==null && start) ? (eq/start-1)*100 : null;
+  var invested = (eq && num(a.long_market_value)!==null) ? num(a.long_market_value)/eq*100 : null;
+  var t=$("tiles"); t.textContent="";
+  t.appendChild(tile("Account value", money(eq), "Fake money"));
+  t.appendChild(tile("Today", signed(day), pct(dayP), cls(day)));
+  t.appendChild(tile("Since start", pct(tot), start? "from "+money(start,0) : "", cls(tot)));
+  t.appendChild(tile("Cash", money(a.cash), invested===null?"":invested.toFixed(0)+"% invested"));
+  t.appendChild(tile("Positions", (d.positions||[]).length+" / "+((d.limits||{}).max_positions||6), "max open"));
+  t.appendChild(tile("Buys this week", (d.buys_this_week||0)+" / "+((d.limits||{}).max_buys_per_week||3), "weekly limit"));
+
+  drawChart(series(d));
+
+  $("positions").textContent="";
+  $("positions").appendChild(table(["Stock","Shares","Entry","Price","Value","P/L","P/L %","Stop"],
+    (d.positions||[]).map(function(p){
+      var st=p.stop ? (p.stop.type==="trailing_stop" ? p.stop.trail_percent+"% trail" : money(p.stop.stop_price)) : "MISSING";
+      return [p.symbol, p.qty, money(p.avg_entry), money(p.price), money(p.market_value,0),
+              {t:signed(p.pl),c:cls(p.pl)}, {t:pct(p.pl_pct),c:cls(p.pl_pct)}, {t:st,c:p.stop?"":"down"}]; })));
+
+  $("orders").textContent="";
+  $("orders").appendChild(table(["Stock","Side","Type","Qty","Fill price","Status","When"],
+    (d.recent_orders||[]).slice(0,20).map(function(o){
+      var w=o.filled_at||o.submitted_at;
+      return [o.symbol, o.side, String(o.type||"").replace("_"," "), o.filled_qty&&+o.filled_qty?o.filled_qty:o.qty,
+              o.filled_avg_price?money(o.filled_avg_price):"–", o.status, w?new Date(w).toLocaleString([], {month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"–"]; })));
+
+  var L=d.latest||{};
+  renderNote("n-daily",L.daily_summary); renderNote("n-research",L.research); renderNote("n-weekly",L.weekly_review);
+
+  var w=$("warn"), msg=[];
+  var age=(Date.now()-new Date(d.generated_at).getTime())/36e5;
+  if(age>80) msg.push("The bot hasn't updated in "+Math.round(age/24)+" days. Check the routines in Claude Code.");
+  if((d.positions||[]).some(function(p){return !p.stop;})) msg.push("A position has no stop order. The next run should fix it.");
+  if(/ALERT/.test(L.daily_summary||"")) msg.push("The latest daily summary contains an ALERT. Read it below.");
+  w.style.display = msg.length ? "block" : "none"; w.textContent = msg.join(" ");
+}
+
+function load(){
+  fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){
+    if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function(d){
+    if(!d.account){ $("updated").textContent="Waiting for the bot's first run…";
+      renderNote("n-daily",""); renderNote("n-research",""); renderNote("n-weekly","");
+      drawChart(null); $("positions").textContent=""; $("positions").appendChild(table([],[]));
+      $("orders").textContent=""; $("orders").appendChild(table([],[])); return; }
+    render(d); })
+  .catch(function(){ $("updated").textContent="Couldn't load data.json yet."; });
+}
+$("toggleTable").addEventListener("click",function(){
+  var tw=$("chartTable"); tw.hidden=!tw.hidden; this.textContent=tw.hidden?"Show table":"Hide table"; });
+var lastPts=null, rt;
+window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ if(lastPts) drawChart(lastPts); },150); });
+load(); setInterval(load, 5*60*1000);
+})();
+</script>
+</body>
+</html>

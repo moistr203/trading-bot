@@ -21,7 +21,8 @@ Do not create a .env file. Do not use curl. Do not work around it.
    bought at open and still passes the full checklist.
 6. Log any action in TRADE-LOG.md. If nothing needed doing, write one line saying so.
 
-Final step (always): 
-git add memory/ trader/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
+Final step (always):
+bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
+git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.

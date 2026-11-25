@@ -12,7 +12,7 @@ Read this file and `memory/` at the start of every run.
 - If the script prints `REFUSED`, accept it. Do not try to get around a refusal
   (smaller lots in a loop, other symbols to dodge a limit, etc.). Log it and move on.
 - Paper only. The script refuses any non-paper endpoint. Never try to change that.
-- At the end of every run: commit `memory/` and `trader/` and push to `main`. Never force-push.
+- At the end of every run: run `bash scripts/alpaca.sh snapshot`, commit `memory/`, `trader/` and `docs/data.json`, and push to `main`. Never force-push.
   If the push is rejected, `git pull --rebase origin main` then push again.
 
 ## Hard rules (also enforced in code where marked *)
@@ -67,9 +67,11 @@ Log every source URL. If you can't find a real catalyst, do nothing. Doing nothi
 - `memory/DAILY-SUMMARY.md`: newest at top. Equity, day P/L, positions, what you did and why.
 - `memory/WEEKLY-REVIEW.md`: Friday review: wins, losses, rule breaks, lessons.
 - `memory/TRADING-STRATEGY.md`: only the weekly review may append "Lessons" here. Never change the hard rules.
+- Start every new entry with a heading line `## YYYY-MM-DD <routine>` (the dashboard shows the newest one).
 - Keep entries short. Plain English, so a beginner can follow along.
+- The repo is PUBLIC (it powers the dashboard). Never write keys, account numbers, emails or personal info anywhere.
 
 ## Commands
 account | positions | orders [open|closed|all] | clock | quote SYM | bars SYM [DAYS] |
 buy SYM QTY | trail SYM QTY PCT | stop SYM QTY PRICE | sell SYM QTY | close SYM |
-cancel ORDER_ID | weekcount
+cancel ORDER_ID | weekcount | snapshot

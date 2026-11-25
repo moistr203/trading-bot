@@ -19,6 +19,7 @@ Usage: bash scripts/alpaca.sh <command> [args]
   close SYM                    close whole position (cancels SYM's orders first)
   cancel ORDER_ID              cancel one order
   weekcount                    buys placed this week (Mon-today, Chicago time)
+  snapshot                     write docs/data.json for the public dashboard
 """
 import json
 import os
@@ -26,7 +27,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 # ---- Hard limits (mirror CLAUDE.md; code wins if they ever disagree) ----
@@ -194,7 +195,7 @@ def cmd_bars(args):
         die("bars SYM [DAYS]")
     s = sym_arg(args[0])
     days = int_arg(args[1], "DAYS") if len(args) > 1 else 30
-    start = (datetime.utcnow() - timedelta(days=int(days * 1.6) + 5)).strftime("%Y-%m-%d")
+    start = (datetime.now(timezone.utc) - timedelta(days=int(days * 1.6) + 5)).strftime("%Y-%m-%d")
     r = call("GET", f"{DATA}/stocks/{s}/bars?timeframe=1Day&start={start}&limit=1000&feed=iex")
     bars = (r.get("bars") or [])[-days:]
     out([{"date": b["t"][:10], "o": b["o"], "h": b["h"], "l": b["l"], "c": b["c"], "v": b["v"]}
@@ -321,6 +322,76 @@ def cmd_cancel(args):
         die("cancel ORDER_ID")
     t(f"/orders/{args[0]}", "DELETE")
     out({"canceled": args[0]})
+
+
+def _latest_entry(path, max_chars=4000):
+    """First '## ' section of a memory file (newest entry), as plain text."""
+    try:
+        txt = open(path, encoding="utf-8").read()
+    except OSError:
+        return ""
+    parts = txt.split("\n## ")
+    if len(parts) < 2:
+        return ""
+    return ("## " + parts[1]).strip()[:max_chars]
+
+
+def cmd_snapshot(_):
+    """Write docs/data.json for the public dashboard. Never includes keys."""
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    a = t("/account")
+    positions = t("/positions")
+    opens = open_orders()
+    closed = t("/orders?status=closed&limit=50&direction=desc")
+    hist = t("/account/portfolio/history?period=3M&timeframe=1D")
+    stops = {}
+    for o in opens:
+        if o["side"] == "sell" and o["type"] in ("trailing_stop", "stop"):
+            stops[o["symbol"]] = {"type": o["type"], "trail_percent": o.get("trail_percent"),
+                                  "stop_price": o.get("stop_price") or o.get("hwm")}
+    pts = [(ts, eq) for ts, eq in zip(hist.get("timestamp") or [], hist.get("equity") or [])
+           if eq is not None and float(eq) > 0]
+    spy = []
+    if pts:
+        start = datetime.fromtimestamp(pts[0][0], timezone.utc).strftime("%Y-%m-%d")
+        try:
+            r = call("GET", f"{DATA}/stocks/SPY/bars?timeframe=1Day&start={start}&limit=1000&feed=iex")
+            spy = [{"date": b["t"][:10], "close": b["c"]} for b in (r.get("bars") or [])]
+        except SystemExit:
+            spy = []
+    mem = os.path.join(root, "memory")
+    data = {
+        "generated_at": datetime.now(TZ).isoformat(timespec="minutes"),
+        "account": {k: a.get(k) for k in ("equity", "last_equity", "cash", "long_market_value",
+                                          "buying_power", "daytrade_count")},
+        "positions": [{
+            "symbol": p["symbol"], "qty": p["qty"], "avg_entry": p["avg_entry_price"],
+            "price": p["current_price"], "market_value": p["market_value"],
+            "pl": p["unrealized_pl"], "pl_pct": round(float(p["unrealized_plpc"]) * 100, 2),
+            "stop": stops.get(p["symbol"]),
+        } for p in positions],
+        "open_orders": [{k: o.get(k) for k in ("symbol", "side", "type", "qty", "trail_percent",
+                                                "stop_price", "status", "submitted_at")} for o in opens],
+        "recent_orders": [{k: o.get(k) for k in ("symbol", "side", "type", "qty", "filled_qty",
+                                                  "filled_avg_price", "status", "filled_at", "submitted_at")}
+                          for o in closed],
+        "equity_history": [{"date": datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%d"), "equity": float(eq)}
+                           for ts, eq in pts],
+        "spy_history": spy,
+        "buys_this_week": len(week_buys()),
+        "limits": {"max_positions": MAX_POSITIONS, "max_position_pct": MAX_POSITION_PCT * 100,
+                   "max_buys_per_week": MAX_BUYS_PER_WEEK},
+        "latest": {
+            "daily_summary": _latest_entry(os.path.join(mem, "DAILY-SUMMARY.md")),
+            "research": _latest_entry(os.path.join(mem, "RESEARCH-LOG.md")),
+            "weekly_review": _latest_entry(os.path.join(mem, "WEEKLY-REVIEW.md")),
+        },
+    }
+    os.makedirs(os.path.join(root, "docs"), exist_ok=True)
+    with open(os.path.join(root, "docs", "data.json"), "w", encoding="utf-8") as fh:
+        json.dump(data, fh, indent=1)
+    print(f"snapshot written: docs/data.json ({len(data['positions'])} positions, "
+          f"{len(pts)} equity points)")
 
 
 CMDS = {k[4:]: v for k, v in globals().items() if k.startswith("cmd_")}

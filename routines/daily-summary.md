@@ -15,7 +15,8 @@ Do not create a .env file. Do not use curl. Do not work around it.
    - What the bot did today and why (one or two sentences per action), or "No trades today" and why.
    - Buys used this week (`weekcount`) and anything to watch tomorrow.
 
-Final step (always): 
-git add memory/ trader/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
+Final step (always):
+bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
+git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.

@@ -18,7 +18,8 @@ Do not create a .env file. Do not use curl. Do not work around it.
    If it hasn't filled, add it to "Stops to fix".
 6. Log every order in TRADE-LOG.md (time, symbol, qty, fill price, stop, target, reason).
 
-Final step (always): 
-git add memory/ trader/ && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
+Final step (always):
+bash scripts/alpaca.sh snapshot   (updates the dashboard; if it fails, note it and continue)
+git add memory/ trader/ docs/data.json && git commit -m "<routine name>: <date> <one-line summary>" && git push origin main
 If the push is rejected: git pull --rebase origin main, then push again. Never force-push.
 If there is nothing to commit, that is fine.
