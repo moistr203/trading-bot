@@ -1,1 +1,37 @@
-{"generated_at": null, "note": "Waiting for the first bot run."}
+{
+ "generated_at": "2026-11-24T21:15-06:00",
+ "account": {
+  "equity": "100000",
+  "last_equity": "100000",
+  "cash": "100000",
+  "long_market_value": "0",
+  "buying_power": "200000",
+  "daytrade_count": null
+ },
+ "positions": [],
+ "open_orders": [],
+ "recent_orders": [],
+ "equity_history": [
+  {
+   "date": "2026-11-24",
+   "equity": 100000.0
+  }
+ ],
+ "spy_history": [
+  {
+   "date": "2026-11-24",
+   "close": 718.91
+  }
+ ],
+ "buys_this_week": 0,
+ "limits": {
+  "max_positions": 6,
+  "max_position_pct": 20.0,
+  "max_buys_per_week": 3
+ },
+ "latest": {
+  "daily_summary": "## 2026-11-24 daily-summary\n- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).\n- **Cash:** $100,000.00 (100% cash, 0% invested).\n- **Positions:** none, so no stops to check.\n- **What the bot did today:** No trades today. This is the first run (Day 0 baseline set). There are no open or filled orders on the account yet.\n- **Buys this week:** 0 of 3 used.\n- **Watch tomorrow:** Wed Nov 25 is the day before Thanksgiving (market closed Thu, half day Fri). Only buy if there is a real, sourced catalyst that passes the full checklist; doing nothing is fine.",
+  "research": "",
+  "weekly_review": ""
+ }
+}

@@ -1,8 +1,8 @@
 # Trade Log
 
 ## Day 0 baseline
-- Date: (filled in by the first daily-summary run)
-- Starting equity: (filled in by the first daily-summary run, from `account`)
+- Date: 2026-11-24
+- Starting equity: $100,000.00
 - Account: Alpaca PAPER
 
 ## Stops to fix
