@@ -72,7 +72,7 @@ Log every source URL. If you can't find a real catalyst, do nothing. Doing nothi
 - The repo is PUBLIC (it powers the dashboard). Never write keys, account numbers, emails or personal info anywhere.
 
 ## Notifications
-`bash scripts/notify.sh "text"` sends the owner a WhatsApp message (the dashboard link is added automatically).
+`bash scripts/notify.sh "text"` sends the owner a Telegram message (WhatsApp too, if set up) (the dashboard link is added automatically).
 Each routine says when to send. Never put keys, phone numbers or emails in a message or in the repo.
 
 ## Commands

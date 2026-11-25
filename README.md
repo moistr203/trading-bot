@@ -64,15 +64,17 @@ all orders still go through the guarded `scripts/alpaca.sh`.
 3. After a minute it's live at **https://moistr203.github.io/trading-bot/**. Bookmark it or add it to your phone's home screen.
 Every routine run updates `docs/data.json`, and the page refreshes itself every 5 minutes.
 
-## WhatsApp updates (optional, free via CallMeBot)
-1. Save **+34 684 783 708** in your phone contacts. In WhatsApp, send it: `I allow callmebot to send me messages`
-2. It replies with your API key.
-3. In the `trading-bot` environment add:
+## Phone updates (Telegram, free)
+1. In Telegram, message **@BotFather**, send `/newbot`, pick a name and a username ending in `bot`.
+   It replies with a **token**.
+2. Open your new bot and press **Start** (send it "hi").
+3. Message **@userinfobot**; it replies with your numeric **Id**.
+4. In the `trading-bot` environment add:
    ```
-   WHATSAPP_PHONE=+1yourphonenumber
-   CALLMEBOT_APIKEY=the key it sent you
+   TELEGRAM_BOT_TOKEN=the token from BotFather
+   TELEGRAM_CHAT_ID=your Id from userinfobot
    ```
-   and add `api.callmebot.com` to the network allowlist.
+   and add `api.telegram.org` to the network allowlist.
 
 ## Watching it
 - **Alpaca paper dashboard**: balance, positions, every order, live.
