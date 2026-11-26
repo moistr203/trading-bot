@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T12:12-06:00",
+ "generated_at": "2026-11-26T15:11-06:00",
  "account": {
   "equity": "100000",
   "last_equity": "100000",
@@ -42,7 +42,7 @@
   "max_buys_per_week": 3
  },
  "latest": {
-  "daily_summary": "## 2026-11-25 daily-summary\n- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).\n- **Cash:** $100,000.00 (100% cash, 0% invested).\n- **Positions:** none, so no stops to check. No open or filled orders.\n- **What the bot did today:** No trades today. The pre-market scan found one idea (DLTR, after its earnings jump), but buying it would have meant chasing an 11% gap on a weak, risk-off day, so it stayed on the watch list. No other stock had a real catalyst.\n- **Buys this week:** 0 of 3 used.\n- **Watch tomorrow:** Thursday Nov 26 the market is closed for Thanksgiving. Friday Nov 27 is a half day (closes 1 PM ET). DLTR stays on watch; only buy with a fresh, sourced catalyst that passes the full checklist.",
+  "daily_summary": "## 2026-11-26 daily-summary\n- **Market closed today (Thanksgiving).** No trading session.\n- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).\n- **Cash:** $100,000.00 (100% cash, 0% invested).\n- **Positions:** none, so no stops to check. No open or filled orders.\n- **What the bot did today:** No trades today, because the market was closed for the holiday.\n- **Buys this week:** 0 of 3 used.\n- **Watch tomorrow:** Friday Nov 27 is a half day (9:30 AM to 1 PM ET). Thin holiday volume, so be extra picky. DLTR stays on watch; only buy with a fresh, sourced catalyst that passes the full checklist.",
   "research": "## 2026-11-26 pre-market\nMarket closed today (Thanksgiving). No positions, nothing to research. Next open: Fri Nov 27, 9:30 AM ET (half day, closes 1 PM ET).",
   "weekly_review": ""
  }

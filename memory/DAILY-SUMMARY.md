@@ -1,6 +1,15 @@
 # Daily Summary
 (newest at top)
 
+## 2026-11-26 daily-summary
+- **Market closed today (Thanksgiving).** No trading session.
+- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
+- **Cash:** $100,000.00 (100% cash, 0% invested).
+- **Positions:** none, so no stops to check. No open or filled orders.
+- **What the bot did today:** No trades today, because the market was closed for the holiday.
+- **Buys this week:** 0 of 3 used.
+- **Watch tomorrow:** Friday Nov 27 is a half day (9:30 AM to 1 PM ET). Thin holiday volume, so be extra picky. DLTR stays on watch; only buy with a fresh, sourced catalyst that passes the full checklist.
+
 ## 2026-11-25 daily-summary
 - **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
 - **Cash:** $100,000.00 (100% cash, 0% invested).
