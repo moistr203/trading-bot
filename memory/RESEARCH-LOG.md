@@ -1,6 +1,9 @@
 # Research Log
 (newest at top)
 
+## 2026-11-26 pre-market
+Market closed today (Thanksgiving). No positions, nothing to research. Next open: Fri Nov 27, 9:30 AM ET (half day, closes 1 PM ET).
+
 ## 2026-11-25 pre-market
 **Market mood:** Risk-off before the open. Early reports had S&P 500 futures about 1-1.5% lower and Nasdaq-100 futures about 2-2.5% lower, after Tuesday's tech sell-off; Dow futures were down less. Money rotated out of tech into healthcare and value on Tuesday. The 8:30 ET data is heavy: October PCE inflation, GDP, jobless claims and durable goods. The market is closed Thu (Thanksgiving) and closes at 1 PM ET on Fri. Sources (search snippets only, because the pages could not be opened from here): https://www.tipranks.com/news/stock-market-today-nov-25-wall-street-braces-for-inflation-data-after-tech-led-selloff , https://finance.yahoo.com/markets/live/stock-market-today-wednesday-november-25-dow-sp-500-nasdaq-pce-inflation-data-091428237.html
 
