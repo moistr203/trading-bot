@@ -11,6 +11,9 @@
 ## Orders
 (newest at top)
 
+## 2026-11-26 midday
+- 1:12 PM ET: market closed (Thanksgiving). No positions, no orders. Nothing needed doing. Next open Fri Nov 27, 9:30 AM ET (half day).
+
 ## 2026-11-26 market-open
 - 9:35 AM ET: market closed (Thanksgiving). No positions, no orders. Next open Fri Nov 27, 9:30 AM ET (half day).
 
