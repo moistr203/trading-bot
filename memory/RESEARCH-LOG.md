@@ -1,6 +1,24 @@
 # Research Log
 (newest at top)
 
+## 2026-11-27 pre-market
+**Market mood:** Half day today (closes 1 PM ET), Black Friday, usually thin volume. No major US economic data today. I could not find live futures numbers for today in web search (results were from past years), so mood is unknown; treat it as cautious. Tech is weak: XLK closed at 155.82 on 11/25, well below its 20-day average of 167.89 (Nasdaq in a correction per headlines). Staples are strong: XLP 92.28 vs 20-day 90.89.
+
+**Risks to current positions:** None. No positions, no open orders, so no stops to fix.
+
+**Scanner:** 5,924 symbols, 1,465 charts scanned (closes through 11/25). 374 matched a setup; 288 were swing setups (158 breakout_20d, 12 bull_flag, 118 reclaim_ma20). Top 15 kept by dollar volume: INSM V HD QCOM DIS PG MCD TJX IBM HPQ SBUX T LMT VZ RKT.
+
+**Ideas:**
+- **HPQ (HP Inc)**, reclaimed the 20-day average. Catalyst: FY2026 Q4 results (8-K). Q4 revenue $16.0B (+9.3%), non-GAAP EPS $0.83 (down from $0.93 a year ago, but above its own $0.69-0.79 guide; $0.15 of that came from tariff refunds). Stock +11.5% on 11/25 to $31.12 (20-day avg $28.94). Source: https://www.sec.gov/Archives/edgar/data/0000047217/000004721726000054/hp103126exhibit991q426.htm
+  Checklist: (1) catalyst confirmed ✅. (2) Sector: XLK 155.82 is below its 20-day average 167.89 ❌. (3) Above 20-day avg ✅, but the +11.5% jump already happened (chasing risk) ⚠️. SEC facts tool hit a rate limit (HTTP 429) for HPQ, so I used the filing directly. **Verdict: PASS** (tech sector is trending down; EPS fell year over year).
+- **IBM**, reclaimed the 20-day average. Catalyst: Wedbush started coverage at Outperform, $276 target (headline: https://finance.yahoo.com/markets/stocks/articles/ibm-stocks-climb-3-33-184634000.html). Q3 rev +4.7%, EPS +25% (SEC facts). Close $243.47 vs 20-day $242.87. (2) Sector: XLK below its 20-day ❌. A new-coverage rating is also a weak catalyst. **Verdict: PASS.**
+- **DLTR** (on WATCH from 11/25): closed $152.15 on 11/25, still above $150 and its 20-day avg ($139.99); XLP above its 20-day ✅. But the earnings catalyst is now 3 days old and there is no fresh news today, so rule (1) "catalyst found today" is not met. **Verdict: WATCH** (no buy).
+- Others: INSM is a buyout target (Sanofi deal), little upside. V (stablecoin card plan with NBX), DIS, HD, PG, MCD, TJX, QCOM, SBUX, T, LMT, VZ, RKT had only opinion pieces or minor items, no specific fresh catalyst. **PASS.**
+
+**Today:** No BUY-AT-OPEN ideas. Weekcount 0 of 3. Doing nothing is fine on a thin half day.
+Sources for market context: https://news.yahoo.com/us-stock-futures-tick-higher-124415404.html (older-year Black Friday coverage, used only for the usual half-day pattern).
+
+
 ## 2026-11-26 pre-market
 Market closed today (Thanksgiving). No positions, nothing to research. Next open: Fri Nov 27, 9:30 AM ET (half day, closes 1 PM ET).
 
