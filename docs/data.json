@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T08:35-06:00",
+ "generated_at": "2026-11-27T12:12-06:00",
  "account": {
   "equity": "100000",
   "last_equity": "100000",
@@ -36,7 +36,7 @@
   },
   {
    "date": "2026-11-27",
-   "close": 723.19
+   "close": 728.86
   }
  ],
  "buys_this_week": 0,
