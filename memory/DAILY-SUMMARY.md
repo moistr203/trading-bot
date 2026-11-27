@@ -1,6 +1,14 @@
 # Daily Summary
 (newest at top)
 
+## 2026-11-27 daily-summary
+- **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
+- **Cash:** $100,000.00 (100% cash, 0% invested).
+- **Positions:** none, so no stops to check. No open or filled orders.
+- **What the bot did today:** No trades today. It was a thin half day (closed 1 PM ET). The two scanner ideas (HPQ, IBM) are tech stocks, and the tech sector (XLK) is below its 20-day average, so they failed the checklist. DLTR stayed on watch because there was no fresh catalyst.
+- **Buys this week:** 0 of 3 used. The count resets Monday.
+- **Watch Monday (Nov 30):** New week, full trading day. Check if tech recovers above its 20-day average. DLTR stays on watch; only buy with a fresh, sourced catalyst that passes the full checklist.
+
 ## 2026-11-26 daily-summary
 - **Market closed today (Thanksgiving).** No trading session.
 - **Equity:** $100,000.00. Change today: $0.00 (0.00%). Since Day 0 ($100,000.00): $0.00 (0.00%).
