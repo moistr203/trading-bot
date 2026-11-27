@@ -11,6 +11,10 @@
 ## Orders
 (newest at top)
 
+## 2026-11-27 market-open
+- 9:36 AM ET: market open (half day, closes 1 PM ET). No positions, so no stops to fix and no losers to cut.
+- No BUY-AT-OPEN ideas in today's research (tech sector below its 20-day average; DLTR stays on WATCH with no fresh catalyst). No orders placed.
+
 ## 2026-11-26 midday
 - 1:12 PM ET: market closed (Thanksgiving). No positions, no orders. Nothing needed doing. Next open Fri Nov 27, 9:30 AM ET (half day).
 
